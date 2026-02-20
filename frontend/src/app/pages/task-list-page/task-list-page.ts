@@ -1,13 +1,39 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { TaskListCardComponent } from './task-list-card/task-list-card';
+import { TaskListService } from '../../shared/services/task-list.service';
+import { TaskList } from '../../models/task-list.model';
+import { CreateButtonComponent } from '../../shared/components/create-button/create-button';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskListFormComponent } from './task-list-form/task-list-form';
 
 @Component({
   selector: 'app-task-list-page',
-  imports: [TaskListCardComponent],
+  imports: [TaskListCardComponent, CreateButtonComponent],
   templateUrl: './task-list-page.html',
   styleUrl: './task-list-page.css',
 })
-export class TaskListPageComponent {
-  tempTaskList = { id: 0, title: 'First task list', description: 'Something test 123' };
-  sendingTaskList = signal(this.tempTaskList);
+export class TaskListPageComponent implements OnInit {
+  private taskListService = inject(TaskListService);
+  private dialog = inject(MatDialog);
+  sendingTaskLists = signal<TaskList[]>([]);
+  sendingLabel = signal('Create a task list!');
+
+  ngOnInit(): void {
+    this.taskListService.getAll().subscribe((results) => {
+      return this.sendingTaskLists.set(results);
+    });
+  }
+
+  onCreatePressed() {
+    // open form
+    const dialogRef = this.dialog.open(TaskListFormComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.taskListService.create(result).subscribe((newTaskList) => {
+          this.sendingTaskLists.update((lists) => [...lists, newTaskList]);
+          console.log(`created: ${JSON.stringify(result, null, 2)}`);
+        });
+      }
+    });
+  }
 }

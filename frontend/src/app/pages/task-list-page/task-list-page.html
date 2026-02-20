@@ -1,2 +1,3 @@
 <p>task-list-page works!</p>
-<app-task-list-card [receivedTaskList]="sendingTaskList()"/>
+<app-create-button [receivedLabel]="sendingLabel()" (createPressed)="onCreatePressed()"/>
+<app-task-list-card [receivedTaskLists]="sendingTaskLists()" />

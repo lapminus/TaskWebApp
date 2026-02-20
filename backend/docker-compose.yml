@@ -1,9 +1,10 @@
+name: tasklistdb
 services:
-  db:
-    image: postgres:16
-    ports:
-      - "5433:5432"
-    environment:
-      POSTGRES_DB: tasklistdb
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: changemeinprod!
+    db:
+        image: postgres:16
+        ports:
+            - "5433:5432"
+        environment:
+            POSTGRES_DB: tasklistdb
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: changemeinprod!

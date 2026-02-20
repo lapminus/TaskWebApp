@@ -10,5 +10,5 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './task-list-card.css',
 })
 export class TaskListCardComponent {
-  receivedTaskList = input<TaskList>();
+  receivedTaskLists = input<TaskList[]>();
 }
