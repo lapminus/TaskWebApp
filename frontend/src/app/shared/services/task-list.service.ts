@@ -7,7 +7,7 @@ import { CreateTaskListRequest, TaskList } from '../../models/task-list.model';
   providedIn: 'root',
 })
 export class TaskListService {
-  baseUrl = 'http://localhost/8080/api/v1/tasklist';
+  baseUrl = 'http://localhost:8080/api/v1/tasklist';
 
   http = inject(HttpClient);
 
