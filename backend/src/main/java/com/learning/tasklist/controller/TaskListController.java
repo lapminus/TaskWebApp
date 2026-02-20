@@ -2,8 +2,8 @@ package com.learning.tasklist.controller;
 
 import com.learning.tasklist.domain.dto.TaskListDto;
 import com.learning.tasklist.domain.model.TaskList;
-import com.learning.tasklist.mappers.impl.TaskListMapperImpl;
-import com.learning.tasklist.service.impl.TaskListServiceImpl;
+import com.learning.tasklist.mappers.TaskListMapper;
+import com.learning.tasklist.service.TaskListService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +15,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "/api/v1/tasklist")
 public class TaskListController {
-    private final TaskListServiceImpl taskListService;
-    private final TaskListMapperImpl taskListMapper;
+    private final TaskListService taskListService;
+    private final TaskListMapper taskListMapper;
 
-    public TaskListController(TaskListServiceImpl taskListService, TaskListMapperImpl taskListMapper) {
+    public TaskListController(TaskListService taskListService, TaskListMapper taskListMapper) {
         this.taskListService = taskListService;
         this.taskListMapper = taskListMapper;
     }
