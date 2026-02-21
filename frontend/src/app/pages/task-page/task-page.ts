@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TaskListService } from '../../shared/services/task-list.service';
 import { TaskList } from '../../models/task-list.model';
 import { MatCardModule } from '@angular/material/card';
@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskListFormComponent } from '../task-list-page/task-list-form/task-list-form';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-task-page',
@@ -17,7 +18,7 @@ import { TaskListFormComponent } from '../task-list-page/task-list-form/task-lis
 })
 export class TaskPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private location = inject(Location);
   private taskListService = inject(TaskListService);
   private dialog = inject(MatDialog);
   taskList = signal<TaskList | null>(null);
@@ -47,6 +48,10 @@ export class TaskPageComponent implements OnInit {
         },
       });
   }
+  
+  onBack() {
+    this.location.back();
+  }
 
   onEdit() {
     const dialogRef = this.dialog.open(TaskListFormComponent, {
@@ -66,7 +71,7 @@ export class TaskPageComponent implements OnInit {
 
   onDelete() {
     this.taskListService.deleteById(this.taskListId!).subscribe({
-      next: () => this.router.navigate(['/']),
+      next: () => this.onBack(),
       error: (err: HttpErrorResponse) => this.errorMessage.set(err.error.message),
     });
   }

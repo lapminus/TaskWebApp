@@ -6,6 +6,7 @@
 }
 @else {
 <div class="page-container">
+    <button class="back-button" matButton="outlined" (click)="onBack()"><-- Back</button>
     <mat-card>
         <mat-card-header>
             <mat-card-title>{{ taskList()!.title }}</mat-card-title>
