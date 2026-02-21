@@ -7,9 +7,8 @@ import { CreateTaskListRequest, TaskList } from '../../models/task-list.model';
   providedIn: 'root',
 })
 export class TaskListService {
-  baseUrl = 'http://localhost:8080/api/v1/tasklist';
-
-  http = inject(HttpClient);
+  private baseUrl = 'http://localhost:8080/api/v1/tasklist';
+  private http = inject(HttpClient);
 
   getAll(): Observable<TaskList[]> {
     return this.http.get<TaskList[]>(this.baseUrl);

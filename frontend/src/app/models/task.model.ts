@@ -3,8 +3,15 @@ export interface Task {
   title: string;
   description?: string;
   dueDate: string;
-  taskStatus: TaskStatus
-  taskPriority: TaskPriority
+  taskStatus: TaskStatus;
+  taskPriority: TaskPriority;
+}
+
+export interface CreateTaskRequest {
+  title: string;
+  description?: string;
+  dueDate: string;
+  taskPriority: TaskPriority;
 }
 
 export enum TaskStatus {

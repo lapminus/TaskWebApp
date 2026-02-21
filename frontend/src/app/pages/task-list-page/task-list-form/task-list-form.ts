@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogRef,
@@ -26,11 +26,12 @@ import { TaskList } from '../../../models/task-list.model';
 })
 export class TaskListFormComponent {
   private dialogRef = inject(MatDialogRef<TaskListFormComponent>);
+  private formBuilder = inject(FormBuilder);
   data = inject<TaskList | null>(MAT_DIALOG_DATA);
 
-  form = new FormGroup({
-    title: new FormControl(this.data?.title ?? '', Validators.required),
-    description: new FormControl(this.data?.description ?? ''),
+  form = this.formBuilder.group({
+    title: [this.data?.title ?? '', Validators.required],
+    description: [this.data?.description ?? ''],
   });
 
   onSubmit() {
