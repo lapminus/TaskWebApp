@@ -25,13 +25,11 @@ export class TaskListPageComponent implements OnInit {
   }
 
   onCreatePressed() {
-    // open form
     const dialogRef = this.dialog.open(TaskListFormComponent);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.taskListService.create(result).subscribe((newTaskList) => {
-          this.sendingTaskLists.update((lists) => [...lists, newTaskList]);
-          console.log(`created: ${JSON.stringify(result, null, 2)}`);
+    dialogRef.afterClosed().subscribe((request) => {
+      if (request) {
+        this.taskListService.create(request).subscribe((result) => {
+          this.sendingTaskLists.update((lists) => [...lists, result]);
         });
       }
     });

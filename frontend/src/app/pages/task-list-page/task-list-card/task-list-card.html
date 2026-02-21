@@ -1,13 +1,15 @@
 <div>Your tasklists</div>
 
 @for (tasklist of receivedTaskLists(); track tasklist.id) {
-<mat-card>
+<mat-card class="clickable-card" [routerLink]="['/tasklist', tasklist.id]">
   <mat-card-header>
     <mat-card-title>{{ tasklist.title }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <p>{{ tasklist.description }}</p>
-    <p>{{ tasklist.tasks }}</p>
+    <p>{{ tasklist.tasks }} </p>
+    <p>{{ tasklist.count }}</p>
+    <p>{{ tasklist.progress }}</p>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button>Edit</button>

@@ -1,0 +1,11 @@
+.clickable-card {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease
+}
+
+.clickable-card:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    border: 2px solid;
+    box-shadow: 0 12px 32px
+}
