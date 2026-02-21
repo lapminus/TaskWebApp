@@ -22,4 +22,12 @@ export class TaskListService {
   create(request: CreateTaskListRequest): Observable<TaskList> {
     return this.http.post<TaskList>(this.baseUrl, request);
   }
+
+  update(id: string, request: CreateTaskListRequest): Observable<TaskList> {
+    return this.http.put<TaskList>(this.baseUrl + `/${id}`, request);
+  }
+
+  deleteById(id: string): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + `/${id}`);
+  }
 }

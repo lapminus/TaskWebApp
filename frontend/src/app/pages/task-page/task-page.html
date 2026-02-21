@@ -18,8 +18,8 @@
             <p>{{ taskList()!.progress }}</p>
         </mat-card-content>
         <mat-card-actions>
-            <button matButton="elevated">Edit</button>
-            <button mat-button="warn">Delete</button>
+            <button matButton="elevated" (click)="onEdit()">Edit</button>
+            <button mat-button="warn" (click)="onDelete()">Delete</button>
         </mat-card-actions>
     </mat-card>
 </div>

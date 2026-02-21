@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Create Task List</h2>
+<h2 mat-dialog-title>{{data ? 'Edit' : 'Create'}} Task List</h2>
 
 <mat-dialog-content>
     <mat-form-field appearance="outline">
@@ -17,5 +17,5 @@
 
 <mat-dialog-actions align="end">
     <button mat-button (click)="onCancel()">Cancel</button>
-    <button mat-raised-button (click)="onSubmit()" color="primary">Create</button>
+    <button mat-raised-button (click)="onSubmit()" color="primary">{{data ? 'Save' : 'Create'}}</button>
 </mat-dialog-actions>
