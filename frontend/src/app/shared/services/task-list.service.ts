@@ -15,6 +15,10 @@ export class TaskListService {
     return this.http.get<TaskList[]>(this.baseUrl);
   }
 
+  getById(id: string): Observable<TaskList> {
+    return this.http.get<TaskList>(this.baseUrl + `/${id}`);
+  }
+
   create(request: CreateTaskListRequest): Observable<TaskList> {
     return this.http.post<TaskList>(this.baseUrl, request);
   }

@@ -1,1 +1,26 @@
-<p>task-list-detail works!</p>
+@if (isLoading()) {
+<div>loading...</div>
+}
+@else if (errorMessage()) {
+<div>{{errorMessage()}}</div>
+}
+@else {
+<div class="page-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{ taskList()!.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>{{ taskList()!.description }}</p>
+            <button mat-stroked-button>Add Task</button>
+            <p>{{ taskList()!.tasks }} </p>
+            <p>{{ taskList()!.count }}</p>
+            <p>{{ taskList()!.progress }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button matButton="elevated">Edit</button>
+            <button mat-button="warn">Delete</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+}
