@@ -126,7 +126,22 @@ export class TaskPageComponent implements OnInit {
   }
 
   onEditPressed(taskId: string) {
-    
+    const dialogRef = this.dialog.open(TaskFormComponent, {
+      backdropClass: 'blurred-backdrop',
+      data: this.tasks().find((task) => task.id === taskId),
+    });
+
+    dialogRef.afterClosed().subscribe((request) => {
+      if (request) {
+        this.taskService.update(this.taskListId!, taskId, request).subscribe({
+          next: () => {
+            this.loadTasks();
+            this.loadTaskList();
+          },
+          error: (err: HttpErrorResponse) => this.errorMessage.set(err.error.message),
+        });
+      }
+    });
   }
 
   onDeletePressed(taskId: string) {

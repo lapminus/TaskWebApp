@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Task, TaskPriority } from '../../../models/task.model';
+import { Task, TaskPriority, TaskStatus } from '../../../models/task.model';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -26,11 +26,12 @@ export class TaskFormComponent {
   private dialogRef = inject(MatDialogRef<TaskFormComponent>);
   private formBuilder = inject(FormBuilder);
   data = inject<Task | null>(MAT_DIALOG_DATA);
-
+  
   form = this.formBuilder.group({
     title: [this.data?.title ?? '', Validators.required],
     description: [this.data?.description ?? ''],
     dueDate: [this.data?.dueDate ?? '', Validators.required],
+    taskStatus: [this.data?.taskStatus ?? TaskStatus.OPEN],
     taskPriority: [this.data?.taskPriority ?? TaskPriority.MEDIUM],
   });
 

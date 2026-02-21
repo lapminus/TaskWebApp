@@ -24,14 +24,24 @@
     }
   </mat-form-field>
 
+  @if (data) {
   <mat-form-field appearance="outline">
-    <mat-label>Priority</mat-label>
-    <mat-select [formControl]="form.controls.taskPriority">
-      <mat-option value="LOW">Low</mat-option>
-      <mat-option value="MEDIUM">Medium</mat-option>
-      <mat-option value="HIGH">High</mat-option>
+    <mat-label>Status</mat-label>
+    <mat-select [formControl]="form.controls.taskStatus">
+      <mat-option value="OPEN">Open</mat-option>
+      <mat-option value="CLOSED">Close</mat-option>
     </mat-select>
   </mat-form-field>
+}
+
+<mat-form-field appearance="outline">
+  <mat-label>Priority</mat-label>
+  <mat-select [formControl]="form.controls.taskPriority">
+    <mat-option value="LOW">Low</mat-option>
+    <mat-option value="MEDIUM">Medium</mat-option>
+    <mat-option value="HIGH">High</mat-option>
+  </mat-select>
+</mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
