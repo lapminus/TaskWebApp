@@ -6,29 +6,50 @@
 }
 @else {
 <div class="page-container">
-    <button class="back-button" matButton="outlined" (click)="onBack()"><-- Back</button>
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>{{ taskList()!.title }}</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <p>{{ taskList()!.description }}</p>
-                    <app-create-button [receivedLabel]="sendingLabel()" (createPressed)="onCreatePressed()" />
-                    <div>Tasks goes here</div>
-                    @for (task of tasks(); track task.id) {
-                        <div>{{task.title}}</div>
-                        <div>{{task.description}}</div>
-                        <div>{{task.dueDate}}</div>
-                        <div>{{task.taskStatus}}</div>
-                        <div>{{task.taskPriority}}</div>
-                    }
-                    <p>{{ taskList()!.count }}</p>
-                    <p>{{ taskList()!.progress }}</p>
-                </mat-card-content>
-                <mat-card-actions>
-                    <button matButton="elevated" (click)="onEdit()">Edit</button>
-                    <button mat-button="warn" (click)="onDelete()">Delete</button>
-                </mat-card-actions>
-            </mat-card>
+  <button class="back-button" matButton="outlined" (click)="onBack()"><-- Back</button>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ taskList()!.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ taskList()!.description }}</p>
+          <app-create-button [receivedLabel]="sendingLabel()" (createPressed)="onCreatePressed()" />
+          <div>Tasks goes here</div>
+          @for (task of tasks(); track task.id) {
+          <div>
+            <div>Title</div>
+            <div>{{task.title}}</div>
+          </div>
+          <div>
+            <div>Description</div>
+            <div>{{task.description}}</div>
+          </div>
+          <div>
+            <div>Due Date</div>
+            <div>{{task.dueDate}}</div>
+          </div>
+          <div>
+            <div>Status</div>
+            <div>{{task.taskStatus}}</div>
+          </div>
+          <div>
+            <div>Priority</div>
+            <div>{{task.taskPriority}}</div>
+          </div>
+          <mat-card-actions>
+            <div>Actions</div>
+            <button matButton="elevated" (click)="onEditPressed(task.id)">Edit</button>
+            <button mat-button="warn" (click)="onDeletePressed(task.id)">Delete</button>
+          </mat-card-actions>
+          }
+
+          <p>{{ taskList()!.count }}</p>
+          <p>{{ taskList()!.progress }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button matButton="elevated" (click)="onEdit()">Edit</button>
+          <button mat-button="warn" (click)="onDelete()">Delete</button>
+        </mat-card-actions>
+      </mat-card>
 </div>
 }

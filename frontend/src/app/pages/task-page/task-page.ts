@@ -124,4 +124,18 @@ export class TaskPageComponent implements OnInit {
       }
     });
   }
+
+  onEditPressed(taskId: string) {
+    
+  }
+
+  onDeletePressed(taskId: string) {
+    this.taskService.delete(this.taskListId!, taskId).subscribe({
+      next: () => {
+        this.tasks.update((tasks) => tasks.filter((task) => task.id !== taskId));
+        this.loadTaskList();
+      },
+      error: (err: HttpErrorResponse) => this.errorMessage.set(err.error.message),
+    });
+  }
 }

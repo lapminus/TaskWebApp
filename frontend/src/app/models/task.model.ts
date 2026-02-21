@@ -1,5 +1,5 @@
 export interface Task {
-  id: number;
+  id: string;
   title: string;
   description?: string;
   dueDate: string;
@@ -11,6 +11,14 @@ export interface CreateTaskRequest {
   title: string;
   description?: string;
   dueDate: string;
+  taskPriority: TaskPriority;
+}
+
+export interface UpdateTaskRequest {
+  title: string;
+  description?: string;
+  dueDate: string;
+  taskStatus: TaskStatus;
   taskPriority: TaskPriority;
 }
 
