@@ -1,19 +1,19 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TaskListService } from '../../../shared/services/task-list.service';
-import { TaskList } from '../../../models/task-list.model';
+import { TaskListService } from '../../shared/services/task-list.service';
+import { TaskList } from '../../models/task-list.model';
 import { MatCardModule } from '@angular/material/card';
 import { finalize } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-task-list-detail',
-  imports: [MatCardModule, MatButton, MatIconButton],
-  templateUrl: './task-list-detail.html',
-  styleUrl: './task-list-detail.css',
+  selector: 'app-task-page',
+  imports: [MatCardModule, MatButton],
+  templateUrl: './task-page.html',
+  styleUrl: './task-page.css',
 })
-export class TaskListDetailComponent implements OnInit {
+export class TaskPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private taskListService = inject(TaskListService);
   taskList = signal<TaskList | null>(null);

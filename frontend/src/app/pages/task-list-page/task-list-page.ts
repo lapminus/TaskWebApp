@@ -25,7 +25,9 @@ export class TaskListPageComponent implements OnInit {
   }
 
   onCreatePressed() {
-    const dialogRef = this.dialog.open(TaskListFormComponent);
+    const dialogRef = this.dialog.open(TaskListFormComponent, {
+      backdropClass: 'blurred-backdrop',
+    });
     dialogRef.afterClosed().subscribe((request) => {
       if (request) {
         this.taskListService.create(request).subscribe((result) => {

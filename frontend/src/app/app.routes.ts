@@ -9,9 +9,6 @@ export const routes: Routes = [
   },
   {
     path: 'tasklist/:id',
-    loadComponent: () =>
-      import('./pages/task-list-page/task-list-detail/task-list-detail').then(
-        (m) => m.TaskListDetailComponent,
-      ),
+    loadComponent: () => import('./pages/task-page/task-page').then((m) => m.TaskPageComponent),
   },
 ];
