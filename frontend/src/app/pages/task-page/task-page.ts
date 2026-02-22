@@ -77,19 +77,16 @@ export class TaskPageComponent implements OnInit {
 
   private loadTasks() {
     console.log('loading tasks');
-    this.taskService
-      .getAll(this.taskListId!)
-      .pipe(finalize(() => this.isLoading.set(false)))
-      .subscribe({
-        next: (result) => this.tasks.set(result),
-        error: (err: HttpErrorResponse) => {
-          if (err.status === 404) {
-            this.errorMessage.set('Task not found');
-          } else {
-            this.errorMessage.set(err.error.message ?? 'Bad request');
-          }
-        },
-      });
+    this.taskService.getAll(this.taskListId!).subscribe({
+      next: (result) => this.tasks.set(result),
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 404) {
+          this.errorMessage.set('Task not found');
+        } else {
+          this.errorMessage.set(err.error.message ?? 'Bad request');
+        }
+      },
+    });
   }
 
   onBack() {
@@ -143,8 +140,8 @@ export class TaskPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((request) => {
       if (request) {
         this.taskService.update(this.taskListId!, taskId, request).subscribe({
-          next: () => {
-            this.loadTasks();
+          next: (updated) => {
+            this.tasks.update((tasks) => tasks.map((t) => (t.id === taskId ? updated : t)));
             this.loadTaskList();
           },
           error: (err: HttpErrorResponse) => this.errorMessage.set(err.error.message),
