@@ -10,7 +10,11 @@
   },
   "prettier": {
     "printWidth": 100,
+    "singleAttributePerLine": true,
     "singleQuote": true,
+    "tabWidth": 2,
+    "useTabs": false,
+    "htmlWhitespaceSensitivity": "ignore",
     "overrides": [
       {
         "files": "*.html",

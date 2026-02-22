@@ -1,4 +1,7 @@
 <div class="page-container">
-    <app-create-button [receivedLabel]="sendingLabel()" (createPressed)="onCreatePressed()" />
-    <app-task-list-card [receivedTaskLists]="sendingTaskLists()" />
+  <app-create-button
+    [receivedLabel]="sendingLabel()"
+    (createPressed)="onCreatePressed()"
+  />
+  <app-task-list-card [receivedTaskLists]="sendingTaskLists()" />
 </div>
