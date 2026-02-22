@@ -8,15 +8,24 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskListFormComponent } from '../task-list-page/task-list-form/task-list-form';
-import { Location } from '@angular/common';
+import { DecimalPipe, Location } from '@angular/common';
 import { CreateButtonComponent } from '../../shared/components/create-button/create-button';
 import { TaskFormComponent } from './task-form/task-form';
 import { Task } from '../../models/task.model';
 import { TaskService } from '../../shared/services/task.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-task-page',
-  imports: [MatCardModule, MatButton, CreateButtonComponent],
+  imports: [
+    MatCardModule,
+    MatButton,
+    CreateButtonComponent,
+    MatProgressBarModule,
+    MatIconModule,
+    DecimalPipe,
+  ],
   templateUrl: './task-page.html',
   styleUrl: './task-page.css',
 })

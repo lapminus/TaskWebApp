@@ -5,10 +5,18 @@ import { RouterLink } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-list-card',
-  imports: [MatIconModule, MatCardModule, MatProgressBarModule, MatButtonModule, RouterLink],
+  imports: [
+    MatIconModule,
+    MatCardModule,
+    MatProgressBarModule,
+    MatButtonModule,
+    RouterLink,
+    DecimalPipe,
+  ],
   templateUrl: './task-list-card.html',
   styleUrl: './task-list-card.css',
 })

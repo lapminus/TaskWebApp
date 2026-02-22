@@ -1,55 +1,78 @@
 @if (isLoading()) {
-<div>loading...</div>
+<div class="status-message">Loading...</div>
 }
 @else if (errorMessage()) {
-<div>{{errorMessage()}}</div>
+<div class="status-message error">{{ errorMessage() }}</div>
 }
 @else {
 <div class="page-container">
-  <button class="back-button" matButton="outlined" (click)="onBack()"><-- Back</button>
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>{{ taskList()!.title }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{ taskList()!.description }}</p>
-          <app-create-button [receivedLabel]="sendingLabel()" (createPressed)="onCreatePressed()" />
-          <div>Tasks goes here</div>
-          @for (task of tasks(); track task.id) {
-          <div>
-            <div>Title</div>
-            <div>{{task.title}}</div>
-          </div>
-          <div>
-            <div>Description</div>
-            <div>{{task.description}}</div>
-          </div>
-          <div>
-            <div>Due Date</div>
-            <div>{{task.dueDate}}</div>
-          </div>
-          <div>
-            <div>Status</div>
-            <div>{{task.taskStatus}}</div>
-          </div>
-          <div>
-            <div>Priority</div>
-            <div>{{task.taskPriority}}</div>
-          </div>
-          <mat-card-actions>
-            <div>Actions</div>
-            <button matButton="elevated" (click)="onEditPressed(task.id)">Edit</button>
-            <button mat-button="warn" (click)="onDeletePressed(task.id)">Delete</button>
-          </mat-card-actions>
-          }
 
-          <p>{{ taskList()!.count }}</p>
-          <p>{{ taskList()!.progress }}</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button matButton="elevated" (click)="onEdit()">Edit</button>
-          <button mat-button="warn" (click)="onDelete()">Delete</button>
-        </mat-card-actions>
-      </mat-card>
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <button matButton="outlined" (click)="onBack()">← Back</button>
+      <div>
+        <span class="eyebrow">Task List</span>
+        <h1 class="page-title">{{ taskList()!.title }}</h1>
+        <p class="page-subtitle">{{ taskList()!.description }}</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button matButton="outlined" (click)="onEdit()">Edit</button>
+      <button matButton="filled" (click)="onDelete()">Delete</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-value">{{ taskList()!.count ?? 0 }}</span>
+      <span class="stat-label">Tasks</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{{ (taskList()!.progress ?? 0) | number: '1.0-0'}}%</span>
+      <span class="stat-label">Complete</span>
+    </div>
+    <mat-progress-bar class="progress-bar" mode="determinate" [value]="taskList()!.progress ?? 0" />
+  </div>
+
+  <!-- Tasks -->
+  <div class="tasks-header">
+    <h2 class="tasks-title">Tasks</h2>
+    <app-create-button [receivedLabel]="sendingLabel()" (createPressed)="onCreatePressed()" />
+  </div>
+
+  <div class="task-grid">
+    @for (task of tasks(); track task.id) {
+    <mat-card class="task-card" [class.closed]="task.taskStatus === 'CLOSED'" appearance="outlined">
+      <mat-card-header>
+        <div class="task-card-header-inner">
+          <div class="accent-bar"></div>
+          <mat-card-title>{{ task.title }}</mat-card-title>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="task-description">{{ task.description || '—' }}</p>
+        <div class="task-meta">
+          <span [class]="'tag status-' + task.taskStatus.toLowerCase()">{{ task.taskStatus }}</span>
+          <span [class]="'tag priority-' + task.taskPriority.toLowerCase()">{{ task.taskPriority }}</span>
+          <span class="tag due">{{ task.dueDate }}</span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button matButton="outlined" (click)="onEditPressed(task.id)">Edit</button>
+        <button matButton="outlined" (click)="onDeletePressed(task.id)">Delete</button>
+      </mat-card-actions>
+    </mat-card>
+    }
+
+    @empty {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">task_alt</mat-icon>
+      <p>No tasks yet. Create one to get started.</p>
+    </div>
+    }
+  </div>
+
 </div>
 }

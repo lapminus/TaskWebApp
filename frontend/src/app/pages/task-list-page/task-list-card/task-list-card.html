@@ -26,7 +26,7 @@
             <span class="stat-label">Tasks</span>
           </div>
           <div class="stat">
-            <span class="stat-value">{{ tasklist.progress ?? 0 }}%</span>
+            <span class="stat-value">{{ tasklist.progress ?? 0 | number:'1.0-0'}}%</span>
             <span class="stat-label">Complete</span>
           </div>
         </div>
