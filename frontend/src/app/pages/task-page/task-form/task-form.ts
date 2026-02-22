@@ -26,7 +26,7 @@ export class TaskFormComponent {
   private dialogRef = inject(MatDialogRef<TaskFormComponent>);
   private formBuilder = inject(FormBuilder);
   data = inject<Task | null>(MAT_DIALOG_DATA);
-  
+
   form = this.formBuilder.group({
     title: [this.data?.title ?? '', Validators.required],
     description: [this.data?.description ?? ''],
@@ -39,6 +39,8 @@ export class TaskFormComponent {
     if (this.form.valid) {
       console.log('request: ', JSON.stringify(this.form.value, null, 2));
       this.dialogRef.close(this.form.value);
+    } else {
+      this.form.markAllAsTouched();
     }
   }
 
