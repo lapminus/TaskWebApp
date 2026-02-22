@@ -1,24 +1,39 @@
-<h2 mat-dialog-title>{{data ? 'Edit' : 'Create'}} Task List</h2>
+<h2 mat-dialog-title>{{ data ? 'Edit' : 'Create' }} Task List</h2>
 
 <mat-dialog-content>
-    <div class="form-wrapper">
-        <mat-form-field appearance="outline">
-            <mat-label>Title</mat-label>
-            <input matInput [formControl]="form.controls.title" />
-            @if (form.controls.title.hasError('required')) {
-            <mat-error>Title is required</mat-error>
-            }
-        </mat-form-field>
+  <div class="form-wrapper">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        [formControl]="form.controls.title"
+      />
+      @if (form.controls.title.hasError('required')) {
+        <mat-error>Title is required</mat-error>
+      }
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Description</mat-label>
-            <textarea matInput [formControl]="form.controls.description"></textarea>
-        </mat-form-field>
-    </div>
-
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        [formControl]="form.controls.description"
+      ></textarea>
+    </mat-form-field>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-button (click)="onCancel()">Cancel</button>
-    <button mat-raised-button (click)="onSubmit()" color="primary">{{data ? 'Save' : 'Create'}}</button>
+  <button
+    matButton="outlined"
+    (click)="onCancel()"
+  >
+    Cancel
+  </button>
+  <button
+    matButton="filled"
+    (click)="onSubmit()"
+  >
+    {{ data ? 'Save' : 'Create' }}
+  </button>
 </mat-dialog-actions>

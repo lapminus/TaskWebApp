@@ -25,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 export class TaskFormComponent {
   private dialogRef = inject(MatDialogRef<TaskFormComponent>);
   private formBuilder = inject(FormBuilder);
+  today = new Date();
   data = inject<Task | null>(MAT_DIALOG_DATA);
 
   form = this.formBuilder.group({
@@ -37,7 +38,6 @@ export class TaskFormComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      console.log('request: ', JSON.stringify(this.form.value, null, 2));
       this.dialogRef.close(this.form.value);
     } else {
       this.form.markAllAsTouched();

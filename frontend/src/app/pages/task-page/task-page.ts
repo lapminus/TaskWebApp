@@ -58,7 +58,8 @@ export class TaskPageComponent implements OnInit {
     this.loadTasks();
   }
 
-  loadTaskList() {
+  private loadTaskList() {
+    console.log('loading tasklist');
     this.taskListService
       .getById(this.taskListId!)
       .pipe(finalize(() => this.isLoading.set(false)))
@@ -126,7 +127,6 @@ export class TaskPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((request) => {
       if (request) {
         this.taskService.create(this.taskListId!, request).subscribe((result) => {
-          console.log('result: ', JSON.stringify(result, null, 2));
           this.tasks.update((lists) => [...lists, result]);
           this.loadTaskList();
         });
