@@ -16,7 +16,7 @@ export class TaskListPageComponent implements OnInit {
   private taskListService = inject(TaskListService);
   private dialog = inject(MatDialog);
   sendingTaskLists = signal<TaskList[]>([]);
-  sendingLabel = signal('Create a task list!');
+  sendingLabel = signal('Create Task List');
 
   ngOnInit(): void {
     this.taskListService.getAll().subscribe((results) => {

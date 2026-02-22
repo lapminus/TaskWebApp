@@ -1,14 +1,45 @@
-<div>Your tasklists</div>
+<div class="page">
+  <div class="page-header">
+    <div class="header-left">
+      <span class="eyebrow">Home</span>
+      <h1 class="page-title">Your Task Lists</h1>
+    </div>
+  </div>
 
-@for (tasklist of receivedTaskLists(); track tasklist.id) {
-<mat-card class="clickable-card" [routerLink]="['/tasklist', tasklist.id]">
-  <mat-card-header>
-    <mat-card-title>{{ tasklist.title }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <p>{{ tasklist.description }}</p>
-    <p>{{ tasklist.count }}</p>
-    <p>{{ tasklist.progress }}</p>
-  </mat-card-content>
-</mat-card>
-}
+  <div class="card-grid">
+    @for (tasklist of receivedTaskLists(); track tasklist.id) {
+    <mat-card class="task-card" [routerLink]="['/tasklist', tasklist.id]" appearance="outlined">
+      <mat-card-header>
+        <div class="card-header-inner">
+          <div class="accent-bar"></div>
+          <div class="card-titles">
+            <mat-card-title>{{ tasklist.title }}</mat-card-title>
+            <mat-card-subtitle>{{ tasklist.description || 'No description' }}</mat-card-subtitle>
+          </div>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="stats-row">
+          <div class="stat">
+            <span class="stat-value">{{ tasklist.count ?? 0 }}</span>
+            <span class="stat-label">Tasks</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">{{ tasklist.progress ?? 0 }}%</span>
+            <span class="stat-label">Complete</span>
+          </div>
+        </div>
+        <mat-progress-bar mode="determinate" [value]="tasklist.progress ?? 0" />
+      </mat-card-content>
+    </mat-card>
+    }
+
+    @empty {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">checklist_rtl</mat-icon>
+      <p>No task lists yet. Create one to get started.</p>
+    </div>
+    }
+  </div>
+</div>

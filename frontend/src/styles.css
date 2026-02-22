@@ -3,3 +3,8 @@
 .blurred-backdrop {
     backdrop-filter: blur(4px);
 }
+
+html {
+    scrollbar-gutter: stable;
+    overflow-y: scroll;
+}
