@@ -5,6 +5,8 @@ import { TaskList } from '../../models/task-list.model';
 import { CreateButtonComponent } from '../../shared/components/create-button/create-button';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskListFormComponent } from './task-list-form/task-list-form';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-task-list-page',
@@ -15,6 +17,8 @@ import { TaskListFormComponent } from './task-list-form/task-list-form';
 export class TaskListPageComponent implements OnInit {
   private taskListService = inject(TaskListService);
   private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
+
   sendingTaskLists = signal<TaskList[]>([]);
   sendingLabel = signal('Create Task List');
 
@@ -28,13 +32,25 @@ export class TaskListPageComponent implements OnInit {
     const dialogRef = this.dialog.open(TaskListFormComponent, {
       backdropClass: 'blurred-backdrop',
     });
-    
+
     dialogRef.afterClosed().subscribe((request) => {
-      if (request) {
-        this.taskListService.create(request).subscribe((result) => {
+      if (!request) return;
+
+      this.taskListService.create(request).subscribe({
+        next: (result) => {
           this.sendingTaskLists.update((lists) => [...lists, result]);
-        });
-      }
+          this.snackBar.open('Successfully created task list!', 'Close', {
+            duration: 5000,
+            panelClass: 'snack-success',
+          });
+        },
+        error: (err: HttpErrorResponse) => {
+          this.snackBar.open(err.error?.message ?? 'Could not create task list.', 'Close', {
+            duration: 5000,
+            panelClass: 'snack-error',
+          });
+        },
+      });
     });
   }
 }

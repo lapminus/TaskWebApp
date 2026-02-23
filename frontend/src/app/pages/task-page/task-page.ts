@@ -15,6 +15,7 @@ import { Task } from '../../models/task.model';
 import { TaskService } from '../../shared/services/task.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-task-page',
@@ -35,6 +36,7 @@ export class TaskPageComponent implements OnInit {
   private taskListService = inject(TaskListService);
   private taskService = inject(TaskService);
   private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
 
   sendingLabel = signal('Create a task!');
 
@@ -59,7 +61,6 @@ export class TaskPageComponent implements OnInit {
   }
 
   private loadTaskList() {
-    console.log('loading tasklist');
     this.taskListService
       .getById(this.taskListId!)
       .pipe(finalize(() => this.isLoading.set(false)))
@@ -76,7 +77,6 @@ export class TaskPageComponent implements OnInit {
   }
 
   private loadTasks() {
-    console.log('loading tasks');
     this.taskService.getAll(this.taskListId!).subscribe({
       next: (result) => this.tasks.set(result),
       error: (err: HttpErrorResponse) => {
@@ -100,19 +100,39 @@ export class TaskPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((request) => {
-      if (request) {
-        this.taskListService.update(this.taskListId!, request).subscribe({
-          next: (updated) => this.taskList.set(updated),
-          error: (err: HttpErrorResponse) => this.errorMessage.set(err.error.message),
-        });
-      }
+      if (!request) return;
+
+      this.taskListService.update(this.taskListId!, request).subscribe({
+        next: (updated) => {
+          (this.taskList.set(updated),
+            this.snackBar.open('Succesfully updated task list!', 'Close', {
+              duration: 5000,
+              panelClass: 'snack-success',
+            }));
+        },
+        error: (err: HttpErrorResponse) =>
+          this.snackBar.open(err.error.message ?? 'Could not update task list.', 'Close', {
+            duration: 5000,
+            panelClass: 'snack-error',
+          }),
+      });
     });
   }
 
   onDelete() {
     this.taskListService.deleteById(this.taskListId!).subscribe({
-      next: () => this.onBack(),
-      error: (err: HttpErrorResponse) => this.errorMessage.set(err.error.message),
+      next: () => {
+        (this.onBack(),
+          this.snackBar.open('Succesfully deleted task list!', 'Close', {
+            duration: 5000,
+            panelClass: 'snack-success',
+          }));
+      },
+      error: (err: HttpErrorResponse) =>
+        this.snackBar.open(err.error.message ?? 'Could not delete task list.', 'Close', {
+          duration: 5000,
+          panelClass: 'snack-error',
+        }),
     });
   }
 
@@ -122,12 +142,24 @@ export class TaskPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((request) => {
-      if (request) {
-        this.taskService.create(this.taskListId!, request).subscribe((result) => {
+      if (!request) return;
+
+      this.taskService.create(this.taskListId!, request).subscribe({
+        next: (result) => {
           this.tasks.update((lists) => [...lists, result]);
           this.loadTaskList();
-        });
-      }
+          this.snackBar.open('Succesfully created task!', 'Close', {
+            duration: 5000,
+            panelClass: 'snack-success',
+          });
+        },
+        error: (err: HttpErrorResponse) => {
+          this.snackBar.open(err.error.message ?? 'Could not create task', 'Close', {
+            duration: 5000,
+            panelClass: 'snack-error',
+          });
+        },
+      });
     });
   }
 
@@ -138,15 +170,23 @@ export class TaskPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((request) => {
-      if (request) {
-        this.taskService.update(this.taskListId!, taskId, request).subscribe({
-          next: (updated) => {
-            this.tasks.update((tasks) => tasks.map((t) => (t.id === taskId ? updated : t)));
-            this.loadTaskList();
-          },
-          error: (err: HttpErrorResponse) => this.errorMessage.set(err.error.message),
-        });
-      }
+      if (!request) return;
+
+      this.taskService.update(this.taskListId!, taskId, request).subscribe({
+        next: (updated) => {
+          this.tasks.update((tasks) => tasks.map((t) => (t.id === taskId ? updated : t)));
+          this.loadTaskList();
+          this.snackBar.open('Succesfully updated task!', 'Close', {
+            duration: 5000,
+            panelClass: 'snack-success',
+          });
+        },
+        error: (err: HttpErrorResponse) =>
+          this.snackBar.open(err.error.message ?? 'Could not update task.', 'Close', {
+            duration: 5000,
+            panelClass: 'snack-error',
+          }),
+      });
     });
   }
 
@@ -155,8 +195,16 @@ export class TaskPageComponent implements OnInit {
       next: () => {
         this.tasks.update((tasks) => tasks.filter((task) => task.id !== taskId));
         this.loadTaskList();
+        this.snackBar.open('Succesfully deleted task!', 'Close', {
+          duration: 5000,
+          panelClass: 'snack-success',
+        });
       },
-      error: (err: HttpErrorResponse) => this.errorMessage.set(err.error.message),
+      error: (err: HttpErrorResponse) =>
+        this.snackBar.open(err.error.message ?? 'Could not delete task.', 'Close', {
+          duration: 5000,
+          panelClass: 'snack-error',
+        }),
     });
   }
 }

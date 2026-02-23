@@ -8,3 +8,13 @@ html {
     scrollbar-gutter: stable;
     overflow-y: scroll;
 }
+
+.snack-success .mdc-snackbar__surface {
+    background-color: var(--mat-sys-primary-container) !important;
+    color: var(--mat-sys-on-primary-container) !important;
+}
+
+.snack-error .mdc-snackbar__surface {
+    background-color: var(--mat-sys-error-container) !important;
+    color: var(--mat-sys-on-error-container) !important;
+}
