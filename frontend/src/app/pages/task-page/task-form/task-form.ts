@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Task, TaskPriority, TaskStatus } from '../../../models/task.model';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
@@ -22,19 +22,29 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './task-form.html',
   styleUrl: './task-form.css',
 })
-export class TaskFormComponent {
+export class TaskFormComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<TaskFormComponent>);
   private formBuilder = inject(FormBuilder);
   today = new Date();
   data = inject<Task | null>(MAT_DIALOG_DATA);
 
   form = this.formBuilder.group({
-    title: [this.data?.title ?? '', Validators.required],
-    description: [this.data?.description ?? ''],
+    title: [
+      this.data?.title ?? '',
+      { validators: [Validators.required, Validators.maxLength(50)], updateOn: 'change' },
+    ],
+    description: [
+      this.data?.description ?? '',
+      { validators: Validators.maxLength(100), updateOn: 'change' },
+    ],
     dueDate: [this.data?.dueDate ?? '', Validators.required],
     taskStatus: [this.data?.taskStatus ?? TaskStatus.OPEN],
     taskPriority: [this.data?.taskPriority ?? TaskPriority.MEDIUM],
   });
+
+  ngOnInit(): void {
+    this.dialogRef.afterOpened().subscribe(() => this.form.markAllAsTouched());
+  }
 
   onSubmit() {
     if (this.form.valid) {

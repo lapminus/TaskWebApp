@@ -68,11 +68,20 @@
 mat-card-title {
   font: var(--mat-sys-title-medium) !important;
   color: var(--mat-sys-on-surface) !important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 mat-card-subtitle {
   font: var(--mat-sys-body-small) !important;
   color: var(--mat-sys-on-surface-variant) !important;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 mat-card-content {

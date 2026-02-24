@@ -10,6 +10,8 @@
       />
       @if (form.controls.title.hasError('required')) {
         <mat-error>Title is required</mat-error>
+      } @else if (form.controls.title.hasError('maxlength')) {
+        <mat-error>Title cannot exceed 50 characters</mat-error>
       }
     </mat-form-field>
 
@@ -19,6 +21,9 @@
         matInput
         [formControl]="form.controls.description"
       ></textarea>
+      @if (form.controls.description.hasError('maxlength')) {
+        <mat-error>Description cannot exceed 100 characters</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline">

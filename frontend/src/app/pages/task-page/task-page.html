@@ -4,7 +4,6 @@
   <div class="status-message error">{{ errorMessage() }}</div>
 } @else {
   <div class="page-container">
-    <!-- Header -->
     <div class="page-header">
       <div class="header-left">
         <button
@@ -35,7 +34,6 @@
       </div>
     </div>
 
-    <!-- Stats -->
     <div class="stats-bar">
       <div class="stat">
         <span class="stat-value">{{ taskList()!.count ?? 0 }}</span>
@@ -52,7 +50,6 @@
       />
     </div>
 
-    <!-- Tasks -->
     <div class="tasks-header">
       <h2 class="tasks-title">Tasks</h2>
       <app-create-button
