@@ -1,7 +1,5 @@
 @if (isLoading()) {
-  <div class="status-message">Loading...</div>
-} @else if (errorMessage()) {
-  <div class="status-message error">{{ errorMessage() }}</div>
+  <div class="status-loading"><mat-spinner></mat-spinner></div>
 } @else {
   <div class="page-container">
     <div class="page-header">
@@ -98,7 +96,6 @@
             </button>
           </mat-card-actions>
         </mat-card>
-
       } @empty {
         <div class="empty-state">
           <mat-icon class="empty-icon">task_alt</mat-icon>

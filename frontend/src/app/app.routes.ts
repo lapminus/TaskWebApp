@@ -11,4 +11,12 @@ export const routes: Routes = [
     path: 'tasklist/:id',
     loadComponent: () => import('./pages/task-page/task-page').then((m) => m.TaskPageComponent),
   },
+  {
+    path: 'error',
+    loadComponent: () => import('./pages/error/error').then((m) => m.ErrorComponent),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];

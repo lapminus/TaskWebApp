@@ -111,6 +111,13 @@
     flex: 1;
 }
 
+.status-loading {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .tasks-header {
     display: flex;
     align-items: center;

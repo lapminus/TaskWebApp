@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TaskListService } from '../../shared/services/task-list.service';
 import { TaskList } from '../../models/task-list.model';
 import { MatCardModule } from '@angular/material/card';
@@ -16,6 +16,7 @@ import { TaskService } from '../../shared/services/task.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-task-page',
@@ -25,6 +26,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     CreateButtonComponent,
     MatProgressBarModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     DecimalPipe,
   ],
   templateUrl: './task-page.html',
@@ -32,6 +34,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class TaskPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private location = inject(Location);
   private taskListService = inject(TaskListService);
   private taskService = inject(TaskService);
@@ -46,16 +49,14 @@ export class TaskPageComponent implements OnInit {
   tasks = signal<Task[]>([]);
 
   isLoading = signal(true);
-  errorMessage = signal<string | null>(null);
 
   ngOnInit(): void {
     this.taskListId = this.route.snapshot.paramMap.get('id');
     if (!this.taskListId) {
-      this.errorMessage.set('Task list id not found');
+      this.router.navigate(['/error'], { state: { message: 'Task List not found.' } });
       this.isLoading.set(false);
       return;
     }
-
     this.loadTaskList();
     this.loadTasks();
   }
@@ -68,9 +69,13 @@ export class TaskPageComponent implements OnInit {
         next: (result) => this.taskList.set(result),
         error: (err: HttpErrorResponse) => {
           if (err.status === 404) {
-            this.errorMessage.set('Task List not found');
+            this.router.navigate(['/error'], {
+              state: { code: 404, message: 'Task List not found.' },
+            });
           } else {
-            this.errorMessage.set(err.error.message ?? 'Bad request');
+            this.router.navigate(['/error'], {
+              state: { code: 400, message: `Bad request: ${err.error.message}` },
+            });
           }
         },
       });
@@ -81,9 +86,11 @@ export class TaskPageComponent implements OnInit {
       next: (result) => this.tasks.set(result),
       error: (err: HttpErrorResponse) => {
         if (err.status === 404) {
-          this.errorMessage.set('Task not found');
+          this.router.navigate(['/error'], { state: { code: 404, message: 'Task not found.' } });
         } else {
-          this.errorMessage.set(err.error.message ?? 'Bad request');
+          this.router.navigate(['/error'], {
+            state: { code: 400, message: `Bad request: ${err.error.message}` },
+          });
         }
       },
     });

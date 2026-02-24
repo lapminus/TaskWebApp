@@ -1,0 +1,33 @@
+.page-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+}
+
+.eyebrow {
+    font: var(--mat-sys-label-small);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mat-sys-error);
+}
+
+.title {
+    font: var(--mat-sys-display-medium);
+    color: var(--mat-sys-on-surface);
+    margin: auto;
+}
+
+.subtitle {
+    font: var(--mat-sys-body-large);
+    color: var(--mat-sys-on-surface-variant);
+    margin: auto;
+}
