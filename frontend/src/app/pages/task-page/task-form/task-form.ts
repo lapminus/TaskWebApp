@@ -43,6 +43,7 @@ export class TaskFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    console.log(this.today);
     this.dialogRef.afterOpened().subscribe(() => this.form.markAllAsTouched());
   }
 

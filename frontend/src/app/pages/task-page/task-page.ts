@@ -17,6 +17,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ConfirmDeletionComponent } from '../../shared/components/confirm-deletion/confirm-deletion';
 
 @Component({
   selector: 'app-task-page',
@@ -129,19 +130,31 @@ export class TaskPageComponent implements OnInit {
   }
 
   onDelete() {
-    this.taskListService.deleteById(this.taskListId!).subscribe({
-      next: () => {
-        (this.onBack(),
-          this.snackBar.open('Succesfully deleted task list!', 'Close', {
-            duration: 5000,
-            panelClass: 'snack-success',
-          }));
+    const dialogRef = this.dialog.open(ConfirmDeletionComponent, {
+      data: {
+        title: 'Delete Task List',
+        message:
+          'Are you sure you want to delete this task list? All tasks inside the task list will also be deleted. This cannot be undone.',
       },
-      error: (err: HttpErrorResponse) =>
-        this.snackBar.open(err.error.message ?? 'Could not delete task list.', 'Close', {
-          duration: 5000,
-          panelClass: 'snack-error',
-        }),
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (!confirmed) return;
+
+      this.taskListService.deleteById(this.taskListId!).subscribe({
+        next: () => {
+          (this.onBack(),
+            this.snackBar.open('Succesfully deleted task list!', 'Close', {
+              duration: 5000,
+              panelClass: 'snack-success',
+            }));
+        },
+        error: (err: HttpErrorResponse) =>
+          this.snackBar.open(err.error.message ?? 'Could not delete task list.', 'Close', {
+            duration: 5000,
+            panelClass: 'snack-error',
+          }),
+      });
     });
   }
 
@@ -200,20 +213,31 @@ export class TaskPageComponent implements OnInit {
   }
 
   onDeletePressed(taskId: string) {
-    this.taskService.delete(this.taskListId!, taskId).subscribe({
-      next: () => {
-        this.tasks.update((tasks) => tasks.filter((task) => task.id !== taskId));
-        this.loadTaskList();
-        this.snackBar.open('Succesfully deleted task!', 'Close', {
-          duration: 5000,
-          panelClass: 'snack-success',
-        });
+    const dialogRef = this.dialog.open(ConfirmDeletionComponent, {
+      data: {
+        title: 'Delete Task',
+        message: 'Are you sure you want to delete this task? This cannot be undone.',
       },
-      error: (err: HttpErrorResponse) =>
-        this.snackBar.open(err.error.message ?? 'Could not delete task.', 'Close', {
-          duration: 5000,
-          panelClass: 'snack-error',
-        }),
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (!confirmed) return;
+
+      this.taskService.delete(this.taskListId!, taskId).subscribe({
+        next: () => {
+          this.tasks.update((tasks) => tasks.filter((task) => task.id !== taskId));
+          this.loadTaskList();
+          this.snackBar.open('Succesfully deleted task!', 'Close', {
+            duration: 5000,
+            panelClass: 'snack-success',
+          });
+        },
+        error: (err: HttpErrorResponse) =>
+          this.snackBar.open(err.error.message ?? 'Could not delete task.', 'Close', {
+            duration: 5000,
+            panelClass: 'snack-error',
+          }),
+      });
     });
   }
 }
