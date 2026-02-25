@@ -103,6 +103,8 @@ export class TaskPageComponent implements OnInit {
   onEdit() {
     const dialogRef = this.dialog.open(TaskListFormComponent, {
       backdropClass: 'blurred-backdrop',
+      width: '90vw',
+      maxWidth: '500px',
       data: this.taskList(),
     });
 

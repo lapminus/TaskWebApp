@@ -3,20 +3,14 @@
 } @else {
   <div class="page-container">
     <div class="page-header">
-      <div class="header-left">
+      <div class="header-top">
         <button
+          id="first"
           matButton="outlined"
           (click)="onBack()"
         >
           ← Back
         </button>
-        <div>
-          <span class="eyebrow">Task List</span>
-          <h1 class="page-title">{{ taskList()!.title }}</h1>
-          <p class="page-subtitle">{{ taskList()!.description }}</p>
-        </div>
-      </div>
-      <div class="header-actions">
         <button
           matButton="outlined"
           (click)="onEdit()"
@@ -29,6 +23,11 @@
         >
           Delete
         </button>
+      </div>
+      <div class="title">
+        <span class="eyebrow">Task List</span>
+        <h1 class="page-title">{{ taskList()!.title }}</h1>
+        <p class="page-subtitle">{{ taskList()!.description }}</p>
       </div>
     </div>
 
@@ -89,7 +88,7 @@
               Edit
             </button>
             <button
-              matButton="outlined"
+              matButton="filled"
               (click)="onDeletePressed(task.id)"
             >
               Delete

@@ -31,7 +31,7 @@ export class TaskFormComponent implements OnInit {
   form = this.formBuilder.group({
     title: [
       this.data?.title ?? '',
-      { validators: [Validators.required, Validators.maxLength(50)], updateOn: 'change' },
+      { validators: [Validators.required, Validators.maxLength(45)], updateOn: 'change' },
     ],
     description: [
       this.data?.description ?? '',
