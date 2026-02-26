@@ -131,6 +131,7 @@ export class TaskPageComponent implements OnInit {
 
   onDelete() {
     const dialogRef = this.dialog.open(ConfirmDeletionComponent, {
+      backdropClass: 'blurred-backdrop',
       data: {
         title: 'Delete Task List',
         message:
@@ -214,6 +215,7 @@ export class TaskPageComponent implements OnInit {
 
   onDeletePressed(taskId: string) {
     const dialogRef = this.dialog.open(ConfirmDeletionComponent, {
+      backdropClass: 'blurred-backdrop',
       data: {
         title: 'Delete Task',
         message: 'Are you sure you want to delete this task? This cannot be undone.',

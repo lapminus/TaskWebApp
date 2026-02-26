@@ -37,13 +37,20 @@ export class TaskFormComponent implements OnInit {
       this.data?.description ?? '',
       { validators: Validators.maxLength(100), updateOn: 'change' },
     ],
-    dueDate: [this.data?.dueDate ?? '', Validators.required],
+    dueDate: [
+      this.data?.dueDate ? this.parseLocalDate(this.data.dueDate) : '',
+      Validators.required,
+    ],
     taskStatus: [this.data?.taskStatus ?? TaskStatus.OPEN],
     taskPriority: [this.data?.taskPriority ?? TaskPriority.MEDIUM],
   });
 
+  private parseLocalDate(date: string): Date {
+    const [year, month, day] = date.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
+
   ngOnInit(): void {
-    console.log(this.today);
     this.dialogRef.afterOpened().subscribe(() => this.form.markAllAsTouched());
   }
 
