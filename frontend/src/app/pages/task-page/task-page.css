@@ -57,12 +57,14 @@
     color: var(--mat-sys-on-surface);
     margin: 0;
     line-height: 1;
+    word-break: break-word;
 }
 
 .page-subtitle {
     font: var(--mat-sys-body-medium);
     color: var(--mat-sys-on-surface-variant);
     margin: 6px 0 0;
+    word-break: break-word;
 }
 
 .stats-bar {
@@ -134,6 +136,7 @@
     display: grid;
     grid-template-rows: 1fr 1fr auto;
     min-height: 240px;
+    word-break: break-word;
 }
 
 .task-card.closed {
@@ -172,7 +175,8 @@ mat-card-content {
     font: var(--mat-sys-body-small);
     color: var(--mat-sys-on-surface-variant);
     margin: 4px 0 12px;
-    flex: 1
+    flex: 1;
+    word-break: break-word;
 }
 
 .task-meta {
