@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CreateTaskListRequest, TaskList } from '../../models/task-list.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskListService {
-  private baseUrl = 'http://localhost:8080/api/v1/tasklist';
+  private baseUrl = `${environment.apiUrl}/api/v1/tasklist`;
   private http = inject(HttpClient);
 
   getAll(): Observable<TaskList[]> {
