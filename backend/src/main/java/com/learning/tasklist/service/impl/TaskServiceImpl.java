@@ -49,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
         if (task.getTitle() == null || task.getTitle().isBlank()) {
             throw new IllegalArgumentException("Task title is required!");
         }
-        if (task.getDueDate() == null || task.getDueDate().isBefore(LocalDate.now())) {
+        if (task.getDueDate() == null) {
             throw new IllegalArgumentException("Due date is invalid!");
         }
         if (task.getTaskPriority() == null) {
@@ -79,7 +79,7 @@ public class TaskServiceImpl implements TaskService {
         if (task.getTitle() == null || task.getTitle().isBlank()) {
             throw new IllegalArgumentException("Task title is required!");
         }
-        if (task.getDueDate() == null || task.getDueDate().isBefore(LocalDate.now())) {
+        if (task.getDueDate() == null) {
             throw new IllegalArgumentException("Due date is invalid!");
         }
 
