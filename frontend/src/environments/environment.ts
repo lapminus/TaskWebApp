@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://task-web-app-mu.vercel.app',
+  apiUrl: 'https://taskwebapp-93ei.onrender.com',
 };
