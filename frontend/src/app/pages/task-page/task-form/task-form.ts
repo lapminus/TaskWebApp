@@ -56,15 +56,13 @@ export class TaskFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('form value:', JSON.stringify(this.form.value));
     if (this.form.valid) {
       const value = {
         ...this.form.value,
         dueDate: formatDate(this.form.value.dueDate!, 'yyyy-MM-dd', 'en-US'),
       };
-      
+
       this.dialogRef.close(value);
-      console.log('form value:', JSON.stringify(value));
     } else {
       this.form.markAllAsTouched();
     }

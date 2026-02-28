@@ -40,9 +40,6 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public Task addTaskByTaskListId(UUID id, Task task) {
-        System.out.println("Create");
-        System.out.println("Server date: " + LocalDate.now());
-        System.out.println("Requested date: " + task.getDueDate());
         TaskList taskList = taskListDao.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Task list not found!"));
 
@@ -73,9 +70,6 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public Task updateTaskByTaskListId(UUID id, UUID taskId, Task task) {
-        System.out.println("Update");
-        System.out.println("Server date: " + LocalDate.now());
-        System.out.println("Requested date: " + task.getDueDate());
         if (task.getTitle() == null || task.getTitle().isBlank()) {
             throw new IllegalArgumentException("Task title is required!");
         }

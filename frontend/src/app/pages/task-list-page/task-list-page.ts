@@ -7,10 +7,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { TaskListFormComponent } from './task-list-form/task-list-form';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-task-list-page',
-  imports: [TaskListCardComponent, CreateButtonComponent],
+  imports: [TaskListCardComponent, CreateButtonComponent, MatProgressSpinnerModule],
   templateUrl: './task-list-page.html',
   styleUrl: './task-list-page.css',
 })
@@ -22,17 +24,24 @@ export class TaskListPageComponent implements OnInit {
   sendingTaskLists = signal<TaskList[]>([]);
   sendingLabel = signal('Create Task List');
 
+  isLoading = signal(true);
+
   ngOnInit(): void {
-    this.taskListService.getAll().subscribe((results) => {
-      return this.sendingTaskLists.set(results);
-    });
+    this.taskListService
+      .getAll()
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe({
+        next: (results) => {
+          this.sendingTaskLists.set(results);
+        },
+      });
   }
 
   onCreatePressed() {
     const dialogRef = this.dialog.open(TaskListFormComponent, {
       backdropClass: 'blurred-backdrop',
       width: '90vw',
-      maxWidth: '500px'
+      maxWidth: '500px',
     });
 
     dialogRef.afterClosed().subscribe((request) => {
